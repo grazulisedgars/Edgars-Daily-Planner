@@ -29,14 +29,32 @@ currentDay()
                 timeblock.text ((i-12) + "PM");
             }
             //-----------------------------------------------------
+            timeblock.append(createInputField());
+            timeblock.append(saveBtn());
             timeBlocksEl.append(timeblock);
-           
         }
         return timeblock;
     } 
     const timeblocks = generateTimeblocks();
 
     timeBlocksEl.append(timeblocks);
+
+
+// Each timeblock contains input field and save button
+
+function createInputField () {
+    var inputField = $("<input>");
+    inputField.attr("type", "text");
+    inputField.addClass("textarea")
+    return inputField;
+}
+
+function saveBtn () {
+    var saveBtn = $("<button>");
+    saveBtn.addClass("saveBtn");
+    saveBtn.text("Save");
+    return saveBtn;
+}
 
 // Color-code each timeblock based on past, present and future when the timeblock is viewed
 
