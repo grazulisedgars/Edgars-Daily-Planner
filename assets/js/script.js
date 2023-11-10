@@ -1,7 +1,8 @@
 console.log ("This JS is linked")
 
 // Display the current day at the top of the calendar when a user opens the planner
-
+var day = dayjs().format("dddd Do, MMMM YYYY");
+$("#currentDay").text(day);
 
 // Present timeblocks for standard business hours when the user scrolls down
 
