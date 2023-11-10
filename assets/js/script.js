@@ -30,8 +30,8 @@ currentDay()
                 timeblock.html('<div class = "col-2 col-md-1 hour text-center py-3">'+ (i-12) + "PM" + '</div>');
             }
             //-----------------------------------------------------
-            timeblock.append(createInputField());
-            timeblock.append(saveBtn());
+            timeblock.append(createInputField(i));
+            timeblock.append(saveBtn(i));
             timeBlocksEl.append(timeblock);
         }
         return timeblock;
@@ -43,18 +43,20 @@ currentDay()
 
 // Each timeblock contains input field and save button
 
-function createInputField () {
+function createInputField (i) {
     var inputField = $("<input>");
     inputField.attr("type", "text");
-    inputField.attr ("id", "inputField")
-    inputField.addClass("col-8 col-md-10 description")
+    inputField.attr ("id", "inputField" +i);
+    inputField.addClass("col-8 col-md-10 description");
     return inputField;
 }
 
-function saveBtn () {
+function saveBtn(i) {
     var saveBtn = $("<button>");
     saveBtn.addClass("btn saveBtn col-2 col-md-1");
     saveBtn.text("Save");
+    saveBtn.attr("data-hour", i); 
+    saveBtn.attr("id", "saveBtn-" + i);
     return saveBtn;
 }
 
@@ -89,17 +91,20 @@ colorCode()
 var inputFieldEl = $('#inputField');
 
 $('.saveBtn').click(function() {
-    var inputFieldValue = inputFieldEl.val();  
-    localStorage.setItem('timeblock-' + inputFieldEl.attr('id'), inputFieldValue);
+    var inputFieldId = '#inputField' + $(this).attr('data-hour');
+    var inputFieldValue = $(inputFieldId).val();  
+    localStorage.setItem('timeblock-' + inputFieldId, inputFieldValue);
 });
 
 // Load the saved result from local storage and set the value of the input field
 $(window).ready(function() {
-  // Get the saved result from local storage
-  var savedResult = localStorage.getItem('timeblock-' + inputFieldEl.attr('id'));
+    $('.time-block').each(function() {
+        var inputFieldId = '#inputField' + $(this).attr('id').split('-')[1];
+        var savedResult = localStorage.getItem('timeblock-' + inputFieldId);
 
-  // If there is a saved result, set the value of the input field to the saved result
-  if (savedResult) {
-    inputFieldEl.val(savedResult);
-  }
+        if (savedResult) {
+            $(inputFieldId).val(savedResult);
+        }
+    });
 });
+
