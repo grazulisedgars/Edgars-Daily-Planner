@@ -11,20 +11,32 @@ currentDay()
 
 // Present timeblocks for standard business hours when the user scrolls down
 
-function generateTimeblocks () {
-    const timeBlocksEl = $(".container");
+    function generateTimeblocks () {
+        const timeBlocksEl = $(".container");
 
-    for (var i = 9; i <= 17; i++) {
-        var timeblock = $("<div>");
-        timeblock.addClass("time-block row hour")
-        timeblock.text(i);
-        timeBlocksEl.append(timeblock);
-    }
-    return timeblock;
-} 
-const timeblocks = generateTimeblocks();
+        for (var i = 9; i <= 17; i++) {
+            var timeblock = $("<div>");
+            timeblock.addClass("time-block row hour")
+            if (i <12) {
+                timeblock.text(i + "AM");
+            } 
+             else if(i === 12)
+            {
+             timeblock.text (i + "PM");
+            }
+            //  This part provided with ask BCS Learning Assistant
+            else {
+                timeblock.text ((i-12) + "PM");
+            }
+            //-----------------------------------------------------
+            timeBlocksEl.append(timeblock);
+           
+        }
+        return timeblock;
+    } 
+    const timeblocks = generateTimeblocks();
 
-timeBlocksEl.append(timeblocks);
+    timeBlocksEl.append(timeblocks);
 
 // Color-code each timeblock based on past, present and future when the timeblock is viewed
 
